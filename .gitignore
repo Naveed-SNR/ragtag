@@ -1,0 +1,29 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+#csv logs
+*.csv
+/*.log
+/.vscode
+# dependencies
+frontend/node_modules
+/.pnp
+.pnp.js
+# testing
+/coverage
+# next.js
+frontend/.next/
+/out/
+# production
+/build
+
+
+.env*.local
+# vercel
+.vercel
+
+next-env.d.ts
+# envirionment  
+backend/penv
+
+backend/documents
+.env

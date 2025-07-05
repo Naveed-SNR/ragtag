@@ -1,0 +1,209 @@
+@import "tailwindcss";
+
+:root {
+  --background: #fefefb;
+  --foreground: #2c2018;
+  --card: #fffffc;
+  --card-foreground: #2c2018;
+  --popover: #fefefb;
+  --popover-foreground: #2c2018;
+  --primary: #2c2018;
+  --primary-foreground: #fefefb;
+  --secondary: #fefefb;
+  --secondary-foreground: #2c2018;
+  --muted: #fefefb;
+  --muted-foreground: #4c3220;
+  --accent: #75614f;
+  --accent-foreground: #2c2018;
+  --destructive: #4c3220;
+  --destructive-foreground: #fffffc;
+  --border: #e5e5e5;
+  --input: #e5e5e5;
+  --ring: #a1a1a1;
+  --chart-1: #82ac93;
+  --chart-2: #738569;
+  --chart-3: #606047;
+  --chart-4: #483e2d;
+  --chart-5: #2c2018;
+  --sidebar: #fffffc;
+  --sidebar-foreground: #2c2018;
+  --sidebar-primary: #2c2018;
+  --sidebar-primary-foreground: #fffffc;
+  --sidebar-accent: #dcf8e3;
+  --sidebar-accent-foreground: #2c2018;
+  --sidebar-border: #e5e5e5;
+  --sidebar-ring: #a1a1a1;
+  --font-sans: Geist Mono, monospace;
+  --font-serif: Geist Mono, monospace;
+  --font-mono: Geist Mono, monospace;
+  --radius: 0rem;
+  --shadow-2xs: 5.42px 5.42px 0px -3.8px hsl(0 0% 0% / 0.05);
+  --shadow-xs: 5.42px 5.42px 0px -3.8px hsl(0 0% 0% / 0.05);
+  --shadow-sm: 5.42px 5.42px 0px -3.8px hsl(0 0% 0% / 0.10), 5.42px 1px 2px -4.8px hsl(0 0% 0% / 0.10);
+  --shadow: 5.42px 5.42px 0px -3.8px hsl(0 0% 0% / 0.10), 5.42px 1px 2px -4.8px hsl(0 0% 0% / 0.10);
+  --shadow-md: 5.42px 5.42px 0px -3.8px hsl(0 0% 0% / 0.10), 5.42px 2px 4px -4.8px hsl(0 0% 0% / 0.10);
+  --shadow-lg: 5.42px 5.42px 0px -3.8px hsl(0 0% 0% / 0.10), 5.42px 4px 6px -4.8px hsl(0 0% 0% / 0.10);
+  --shadow-xl: 5.42px 5.42px 0px -3.8px hsl(0 0% 0% / 0.10), 5.42px 8px 10px -4.8px hsl(0 0% 0% / 0.10);
+  --shadow-2xl: 5.42px 5.42px 0px -3.8px hsl(0 0% 0% / 0.25);
+  --tracking-normal: 0em;
+  --spacing: 0.25rem;
+}
+
+.dark {
+  --background: #19191a;
+  --foreground: #fafafa;
+  --card: #19191a;
+  --card-foreground: #fafafa;
+  --popover: #262626;
+  --popover-foreground: #fafafa;
+  --primary: #e5e5e5;
+  --primary-foreground: #19191a;
+  --secondary: #262626;
+  --secondary-foreground: #fafafa;
+  --muted: #262626;
+  --muted-foreground: #a1a1a1;
+  --accent: #404040;
+  --accent-foreground: #fafafa;
+  --destructive: #ff6568;
+  --destructive-foreground: #fafafa;
+  --border: #282828;
+  --input: #343434;
+  --ring: #737373;
+  --chart-1: #92c5ff;
+  --chart-2: #3a81f6;
+  --chart-3: #2563ef;
+  --chart-4: #1a4eda;
+  --chart-5: #1f3fad;
+  --sidebar: #19191a;
+  --sidebar-foreground: #fafafa;
+  --sidebar-primary: #1447e6;
+  --sidebar-primary-foreground: #fafafa;
+  --sidebar-accent: #262626;
+  --sidebar-accent-foreground: #fafafa;
+  --sidebar-border: #282828;
+  --sidebar-ring: #525252;
+  --font-sans: Geist Mono, monospace;
+  --font-serif: Geist Mono, monospace;
+  --font-mono: Geist Mono, monospace;
+  --radius: 0rem;
+  --shadow-2xs: 5.42px 5.42px 0px -3.8px hsl(0 0% 0% / 0.05);
+  --shadow-xs: 5.42px 5.42px 0px -3.8px hsl(0 0% 0% / 0.05);
+  --shadow-sm: 5.42px 5.42px 0px -3.8px hsl(0 0% 0% / 0.10), 5.42px 1px 2px -4.8px hsl(0 0% 0% / 0.10);
+  --shadow: 5.42px 5.42px 0px -3.8px hsl(0 0% 0% / 0.10), 5.42px 1px 2px -4.8px hsl(0 0% 0% / 0.10);
+  --shadow-md: 5.42px 5.42px 0px -3.8px hsl(0 0% 0% / 0.10), 5.42px 2px 4px -4.8px hsl(0 0% 0% / 0.10);
+  --shadow-lg: 5.42px 5.42px 0px -3.8px hsl(0 0% 0% / 0.10), 5.42px 4px 6px -4.8px hsl(0 0% 0% / 0.10);
+  --shadow-xl: 5.42px 5.42px 0px -3.8px hsl(0 0% 0% / 0.10), 5.42px 8px 10px -4.8px hsl(0 0% 0% / 0.10);
+  --shadow-2xl: 5.42px 5.42px 0px -3.8px hsl(0 0% 0% / 0.25);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+  --font-serif: var(--font-serif);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --shadow-2xs: var(--shadow-2xs);
+  --shadow-xs: var(--shadow-xs);
+  --shadow-sm: var(--shadow-sm);
+  --shadow: var(--shadow);
+  --shadow-md: var(--shadow-md);
+  --shadow-lg: var(--shadow-lg);
+  --shadow-xl: var(--shadow-xl);
+  --shadow-2xl: var(--shadow-2xl);
+}
+
+
+
+body {
+  /* background: var(--background); */
+  background: url('/grid.png  ');
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+  
+}
+
+
+/* Add this to your global CSS or component styles */
+.fade-scroll {
+  mask-image: linear-gradient(to bottom, 
+    transparent 0%, 
+    black 3px, 
+    black calc(100% - 3px), 
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(to bottom, 
+    transparent 0%, 
+    black 8.3px, 
+    black calc(100% - 8.3px), 
+    transparent 100%
+  );
+}
+
+/* Alternative with larger fade area */
+.fade-scroll-large {
+  mask-image: linear-gradient(to bottom, 
+    transparent 0%, 
+    black 40px, 
+    black calc(100% - 40px), 
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(to bottom, 
+    transparent 0%, 
+    black 40px, 
+    black calc(100% - 40px), 
+    transparent 100%
+  );
+}
+
+/* For dynamic fade that adjusts to content */
+.fade-scroll-dynamic {
+  mask-image: linear-gradient(to bottom, 
+    transparent 0%, 
+    black 5%, 
+    black 95%, 
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(to bottom, 
+    transparent 0%, 
+    black 5%, 
+    black 95%, 
+    transparent 100%
+  );
+}
