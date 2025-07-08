@@ -8,12 +8,11 @@ module.exports = {
   ],
   theme: {
     extend: {
-      
       colors: {
-        // primary: {
-        //   100: '#00eaff',
-        //   200: '#00caff',
-        //   },
+        primary: {
+          100: '#00eaff',
+          200: '#00caff',
+          },
         background: ['var(--background)'],
         foreground: ['var(--foreground)'],
         accent: ['var(--accent)'],
