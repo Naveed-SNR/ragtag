@@ -5,7 +5,7 @@ import { Icon } from "@iconify/react";
 export default function Content() {
       // Create a ref for the textarea
       const textareaRef = useRef(null);
-      const [textareaValue, setTextareaValue] = useState('');
+      const [textareaValue, setQueryValue] = useState('');
     
       // State for resizable panels
       const [leftWidth, setLeftWidth] = useState(50); // percentage
@@ -38,10 +38,34 @@ export default function Content() {
     
       // Handle textarea input change
       const handleTextareaChange = (e) => {
-        setTextareaValue(e.target.value);
+        setQueryValue(e.target.value);
         autoResizeTextarea();
       };
     
+      // Handle send button click
+      const handleQuery = async () => {
+        // Handle send button click logic here
+        console.log('Send button clicked');
+        try {
+          await fetch('/api/query', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ query: textareaValue }),
+          });
+        } catch (error) {
+          console.error('Error sending query:', error);
+        }
+        // Clear textarea
+        setQueryValue('');
+    
+        // Scroll to the bottom of the container
+        const container = containerRef.current;
+        if (container) {
+          container.scrollTop = container.scrollHeight;
+        }
+      };
       // Handle container click
       const handleContainerClick = (e) => {
         // Check if clicked element is a button or inside a button
@@ -181,7 +205,7 @@ export default function Content() {
                       <Icon className="m-2 border border-black p-2" icon="tdesign:attach" width="30" height="30" />
                     </button>
                     {/* Send Button - Larger with Hover Disabled */}
-                    <button>
+                    <button onClick={handleQuery}>
                       <Icon className="m-2 bg-accent p-2 text-white" icon="line-md:arrow-up" width="29" height="29" />
                     </button>
                   </div>
