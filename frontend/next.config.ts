@@ -1,10 +1,8 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-  /* config options here */
-  module.exports = {
   async rewrites() {
-    const API_URL = process.env.NEXT_PUBLIC_API_URL || (
+     const API_URL = process.env.NEXT_PUBLIC_API_URL || (
       process.env.NODE_ENV === 'production' 
         ? 'https://leadsync.onrender.com'
         : 'http://localhost:8000'
@@ -16,7 +14,7 @@ const nextConfig: NextConfig = {
       },
     ]
   },
-}
-};
+  }
+
 
 export default nextConfig;

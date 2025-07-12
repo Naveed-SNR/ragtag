@@ -27,3 +27,5 @@ backend/penv
 
 backend/documents
 .env
+backend/env
+__pycache__
