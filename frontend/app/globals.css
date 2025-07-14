@@ -160,6 +160,13 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+.user {
+  @apply max-w-[calc(100%-12rem)] w-fit self-end bg-foreground/10 border border-black/30;
+}
+.assistant {
+  @apply max-w-[calc(100%-12rem)] w-fit self-start border border-black/30;
+}
+
 .dotted-background {
   background: radial-gradient(circle, #333 1px, transparent 1px);
   background-size: 21px 21px;

@@ -1,17 +1,20 @@
+"use client";
 import React from "react";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, ChangeEvent, KeyboardEvent, MouseEvent as ReactMouseEvent } from "react";
 import { Icon } from "@iconify/react";
+import Welcome from "@/components/Welcome";
+import MessageBubble from "@/components/MessageBubble";
 
 export default function Content() {
   // Create a ref for the textarea
-  const textareaRef = useRef(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [textareaValue, setQueryValue] = useState("");
 
   // State for resizable panels
   const [leftWidth, setLeftWidth] = useState(50); // percentage
   const [isResizing, setIsResizing] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
-  const containerRef = useRef(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   // Auto-resize textarea function
   const autoResizeTextarea = () => {
@@ -37,13 +40,13 @@ export default function Content() {
   };
 
   // Handle textarea input change
-  const handleTextareaChange = (e) => {
+  const handleTextareaChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setQueryValue(e.target.value);
     autoResizeTextarea();
   };
 
   // Handle send button click
-  const handleQuery = async () => {
+  const handleSend = async () => {
     // Handle send button click logic here
     console.log("Send button clicked");
     try {
@@ -70,7 +73,7 @@ export default function Content() {
   };
 
   // Press Enter key to send query
-  const handleKeyDown = (e) => {
+  const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       // Only submit if there's actual content (not just whitespace)
@@ -80,21 +83,21 @@ export default function Content() {
     }
   };
   // Handle container click
-  const handleContainerClick = (e) => {
+  const handleContainerClick = (e: ReactMouseEvent<HTMLDivElement>) => {
     // Check if clicked element is a button or inside a button
-    if (!e.target.closest("button")) {
+    if (!(e.target as Element).closest("button")) {
       textareaRef.current?.focus(); // Focus textarea if not clicking a button
     }
   };
 
   // Handle mouse down on resize handle
-  const handleMouseDown = (e) => {
+  const handleMouseDown = (e: ReactMouseEvent<HTMLDivElement>) => {
     e.preventDefault();
     setIsResizing(true);
   };
 
   // Handle mouse move during resize
-  const handleMouseMove = (e) => {
+  const handleMouseMove = (e: MouseEvent) => {
     if (!isResizing || !containerRef.current) return;
 
     const container = containerRef.current;
@@ -146,6 +149,14 @@ export default function Content() {
       document.body.style.userSelect = "";
     };
   }, [isResizing]);
+
+  type ChatMessage = {
+    role: "user" | "assistant";
+    content: string;
+  };
+
+  const [chatHistory, setChatHistory] = useState<ChatMessage[]>([]);
+  const [input, setInput] = useState("");
   return (
     <>
       <div className="flex flex-col md:flex-row grow h-full" ref={containerRef}>
@@ -154,38 +165,18 @@ export default function Content() {
           className="relative flex flex-col justify-between border-r-0 md:border-r px-3 sm:px-4 md:px-6 lg:px-8 pt-4 sm:pt-6 md:pt-8 pb-16 sm:pb-20 w-full md:w-1/2 h-auto md:h-full "
           style={isMounted && window.innerWidth >= 768 ? { width: `${leftWidth}%` } : {}}
         >
-          <div className="h-full md:h-[83%] w-full fade-scroll">
-            {/* Welcome Message */}
-            <div className="flex flex-col items-center h-full justify-center text-center px-2 sm:px-4 ">
-              <div className="max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg space-y-3 sm:space-y-4 md:space-y-6">
-                {/* Logo/Title */}
-                <div className="space-y-1 sm:space-y-2">
-                  <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800">
-                    Welcome to <span className="text-accent">RAGtag</span>
-                  </h1>
-                  <div className="w-12 sm:w-14 md:w-16 h-0.5 sm:h-0.5 md:h-1 bg-accent mx-auto rounded-full"></div>
-                </div>
+          <div className="h-full md:h-[83%] w-full scale-x-[1.029] fade-scroll">
+            {/* Welcome Component */}
+            {chatHistory.length === 1 ? (
+              <Welcome />
+            ) : (
+              <>
+                <MessageBubble role="user" content="I am user" />
+                <MessageBubble role="assistant" content="I am not user" />
+              </>
+            )}
 
-                {/* Subtitle */}
-                <p className="text-xs sm:text-sm md:text-md lg:text-lg text-gray-600 leading-relaxed">Your intelligent document retrieval and generation assistant</p>
-
-                {/* Features */}
-                <div className="space-y-2 sm:space-y-3 text-center items-center flex flex-col justify-center">
-                  <div className="flex items-center justify-ceenter space-x-2 sm:space-x-3">
-                    <div className="w-1 sm:w-1 h-1 sm:h-1 bg-accent rounded-full mt-1 sm:mt-2 flex-shrink-0"></div>
-                    <p className="text-sm sm:text-xs md:text-xs text-gray-700 ">Upload documents and get instant, contextual answers</p>
-                  </div>
-                  <div className="flex items-center justify-ceenter space-x-2 sm:space-x-3">
-                    <div className="w-1 sm:w-1 h-1 sm:h-1 bg-accent rounded-full mt-1 sm:mt-2 flex-shrink-0"></div>
-                    <p className="text-sm  sm:text-xs md:text-xs text-gray-700 ">Generate content based on your document knowledge base</p>
-                  </div>
-                  <div className="flex items-center justify-ceenter space-x-2 sm:space-x-3">
-                    <div className="w-1 sm:w-1 h-1 sm:h-1  bg-accent rounded-full mt-1 sm:mt-2 flex-shrink-0"></div>
-                    <p className="text-sm  sm:text-xs md:text-xs text-gray-700 ">Quickly find the most relevant information with AI</p>
-                  </div>
-                </div>
-              </div>
-            </div>
+            {/* Add more MessageBubble components as needed */}
           </div>
           {/* Copilot-style Textarea Area with Buttons Below */}
           <div className="w-full md:w-[93.81%] static md:absolute md:bottom-4 lg:bottom-8 md:self-center md:left-1/2 md:-translate-x-1/2 border-1 border-color-black mb-3 sm:mb-4 md:mb-0" onClick={handleContainerClick}>
@@ -208,7 +199,7 @@ export default function Content() {
                 <Icon className="m-2 border border-black p-2" icon="tdesign:attach" width="30" height="30" />
               </button>
               {/* Send Button - Larger with Hover Disabled */}
-              <button onClick={handleQuery}>
+              <button onClick={handleSend}>
                 <Icon className="m-2 bg-accent p-2 text-white" icon="line-md:arrow-up" width="29" height="29" />
               </button>
             </div>
