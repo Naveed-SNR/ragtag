@@ -49,6 +49,10 @@ export default function Content() {
   const handleSend = async () => {
     // Handle send button click logic here
     console.log("Send button clicked");
+    if (!textareaValue.trim()) return;
+    const newHistory: ChatMessage[] = [...chatHistory, { role: "user", content: textareaValue }];
+    setChatHistory(newHistory);
+    setQueryValue("");
     try {
       const response = await fetch("/api/query", {
         method: "POST",
@@ -57,13 +61,14 @@ export default function Content() {
         },
         body: JSON.stringify({ query: textareaValue }),
       });
-      const result = await response.json();
-      console.log(result); // The response from FastAPI backend
+      const { response: aiResponse } = await response.json();
+
+      setChatHistory((prev) => [...prev, { role: "assistant", content: aiResponse }]);
+      console.log(aiResponse); // The response from FastAPI backend
     } catch (error) {
       console.error("Error sending query:", error);
     }
-    // Clear textarea
-    setQueryValue("");
+
 
     // Scroll to the bottom of the container
     const container = containerRef.current;
@@ -78,7 +83,7 @@ export default function Content() {
       e.preventDefault();
       // Only submit if there's actual content (not just whitespace)
       if (textareaValue.trim()) {
-        handleQuery();
+        handleSend();
       }
     }
   };
@@ -156,30 +161,32 @@ export default function Content() {
   };
 
   const [chatHistory, setChatHistory] = useState<ChatMessage[]>([]);
-  const [input, setInput] = useState("");
   return (
     <>
       <div className="flex flex-col md:flex-row grow h-full" ref={containerRef}>
         {/* Chat Area */}
         <div
-          className="relative flex flex-col justify-between border-r-0 md:border-r px-3 sm:px-4 md:px-6 lg:px-8 pt-4 sm:pt-6 md:pt-8 pb-16 sm:pb-20 w-full md:w-1/2 h-auto md:h-full "
+          className="relative flex flex-col  border-r-0 md:border-r px-3 sm:px-4 md:px-6 lg:px-8  w-full md:w-1/2"
           style={isMounted && window.innerWidth >= 768 ? { width: `${leftWidth}%` } : {}}
         >
-          <div className="h-full md:h-[83%] w-full scale-x-[1.029] fade-scroll">
+          <div className="h-full md:h-[542px] max-h-[542px] overflow-auto fade-scroll mt-8 mb-3 w-full ">
             {/* Welcome Component */}
-            {chatHistory.length === 1 ? (
+            {chatHistory.length === 0 ? (
               <Welcome />
-            ) : (
-              <>
-                <MessageBubble role="user" content="I am user" />
-                <MessageBubble role="assistant" content="I am not user" />
-              </>
-            )}
+            ) :
+              <div className="w-full h-full max-h-full flex flex-col">
+                {
+                  chatHistory.map((message, index) => (
+                    <MessageBubble key={index} role={message.role} content={message.content} />
+                  ))
+                }
+              </div>
+            }
 
             {/* Add more MessageBubble components as needed */}
           </div>
           {/* Copilot-style Textarea Area with Buttons Below */}
-          <div className="w-full md:w-[93.81%] static md:absolute md:bottom-4 lg:bottom-8 md:self-center md:left-1/2 md:-translate-x-1/2 border-1 border-color-black mb-3 sm:mb-4 md:mb-0" onClick={handleContainerClick}>
+          <div className="w-full flex flex-col static md:absolute bottom-8 md:w-[92%] md:self-center border-1 border-color-black mb-4 sm:mb-4 md:mb-0" onClick={handleContainerClick}>
             <textarea
               ref={textareaRef}
               value={textareaValue}
